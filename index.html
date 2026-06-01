@@ -254,31 +254,38 @@
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbz7SxxyF2v6a76VDyZaSYLModBLe5ExwEjNTX5gqtCBQmgUTiA3SpFsar-fh_6TBPIsqg/exec';
 
     async function doLogin() {
-      const name = document.getElementById('nameInput').value.trim();
-      const pass = document.getElementById('passInput').value.trim();
-      const errEl = document.getElementById('errorMsg');
+  const name = document.getElementById('nameInput').value.trim();
+  const pass = document.getElementById('passInput').value.trim();
+  const errEl = document.getElementById('errorMsg');
 
-      if (!name || !pass) {
-        errEl.textContent = '名前とパスワードを入力してください';
-        return;
-      }
-      errEl.textContent = '確認中…';
+  if (!name || !pass) {
+    errEl.textContent = '名前とパスワードを入力してください';
+    return;
+  }
+  errEl.textContent = '確認中…';
 
-      try {
-        const res = await fetch(GAS_URL, {
-          method: 'POST',
-          body: JSON.stringify({ name, password: pass })
-        });
-        const data = await res.json();
-        if (data.success) {
-          showCard(data);
-        } else {
-          errEl.textContent = '名前またはパスワードが違います';
-        }
-      } catch (e) {
-        errEl.textContent = 'エラーが発生しました。もう一度試してください。';
-      }
+  const callbackName = 'cb_' + Date.now();
+  const url = GAS_URL + '?callback=' + callbackName + '&name=' + encodeURIComponent(name) + '&password=' + encodeURIComponent(pass);
+
+  const script = document.createElement('script');
+  script.src = url;
+
+  window[callbackName] = function(data) {
+    delete window[callbackName];
+    document.body.removeChild(script);
+    if (data.success) {
+      showCard(data);
+    } else {
+      errEl.textContent = '名前またはパスワードが違います';
     }
+  };
+
+  script.onerror = function() {
+    errEl.textContent = 'エラーが発生しました。もう一度試してください。';
+  };
+
+  document.body.appendChild(script);
+}
 
     function showCard(data) {
       document.getElementById('displayName').textContent = data.name;
