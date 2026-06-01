@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ゆげ 会員証</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #f5f4f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Shippori Mincho', serif;
+      padding: 2rem 1rem;
+    }
+
+    .login-wrap, .card-wrap {
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .card-wrap { display: none; }
+
+    .login-title {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      color: #888;
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .field { margin-bottom: 1rem; }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #888;
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      padding: 10px 14px;
+      border: 0.5px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      color: #1a1a1a;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field input:focus { border-color: #999; }
+
+    .login-btn {
+      width: 100%;
+      padding: 11px;
+      margin-top: 0.5rem;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .login-btn:hover { opacity: 0.75; }
+
+    .error-msg {
+      font-size: 12px;
+      color: #c0392b;
+      margin-top: 10px;
+      text-align: center;
+      min-height: 18px;
+    }
+
+    .card {
+      background: #fff;
+      border: 0.5px solid #ddd;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.5rem;
+      border-bottom: 0.5px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .circle-name {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: #aaa;
+      margin-bottom: 4px;
+    }
+
+    .circle-kanji {
+      font-size: 22px;
+      font-weight: 600;
+      color: #1a1a1a;
+      letter-spacing: 0.1em;
+    }
+
+    .member-id-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: 0.08em;
+      text-align: right;
+      padding-top: 4px;
+    }
+
+    .card-body { padding: 1.5rem; }
+
+    .member-name {
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+
+    .member-role {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: #aaa;
+      margin-bottom: 1.5rem;
+    }
+
+    .divider {
+      height: 0.5px;
+      background: #eee;
+      margin-bottom: 1.2rem;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .info-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #aaa;
+    }
+
+    .info-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      color: #1a1a1a;
+    }
+
+    .clock-row {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 0.5px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .clock-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: #aaa;
+    }
+
+    .clock-value {
+      font-family: 'DM Mono', monospace;
+      font-size: 20px;
+      font-weight: 300;
+      color: #1a1a1a;
+      letter-spacing: 0.08em;
+    }
+
+    .logout-btn {
+      width: 100%;
+      margin-top: 1rem;
+      padding: 9px;
+      background: transparent;
+      border: 0.5px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Shippori Mincho', serif;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: #aaa;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .logout-btn:hover { border-color: #bbb; color: #555; }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrap" id="loginWrap">
+    <p class="login-title">ゆげ — MEMBER LOGIN</p>
+    <div class="field">
+      <label>名前</label>
+      <input type="text" id="nameInput" placeholder="山田 太郎" />
+    </div>
+    <div class="field">
+      <label>パスワード</label>
+      <input type="password" id="passInput" placeholder="••••••" />
+    </div>
+    <button class="login-btn" onclick="doLogin()">ログイン</button>
+    <p class="error-msg" id="errorMsg"></p>
+  </div>
+
+  <div class="card-wrap" id="cardWrap">
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <p class="circle-name">COFFEE CIRCLE</p>
+          <p class="circle-kanji">ゆ げ</p>
+        </div>
+        <div class="member-id-badge">
+          <span id="displayId">NO. 001</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="member-name" id="displayName">山田 太郎</p>
+        <p class="member-role" id="displayRole">メンバー</p>
+        <div class="divider"></div>
+        <div class="info-row">
+          <span class="info-label">入会日</span>
+          <span class="info-value" id="displayJoined">2025.04.01</span>
+        </div>
+        <div class="clock-row">
+          <span class="clock-label">現在時刻</span>
+          <span class="clock-value" id="clockDisplay">--:--:--</span>
+        </div>
+      </div>
+    </div>
+    <button class="logout-btn" onclick="doLogout()">ログアウト</button>
+  </div>
+
+  <script>
+    // ★ここにGASのURLを貼り付ける★
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbz7SxxyF2v6a76VDyZaSYLModBLe5ExwEjNTX5gqtCBQmgUTiA3SpFsar-fh_6TBPIsqg/exec';
+
+    async function doLogin() {
+      const name = document.getElementById('nameInput').value.trim();
+      const pass = document.getElementById('passInput').value.trim();
+      const errEl = document.getElementById('errorMsg');
+
+      if (!name || !pass) {
+        errEl.textContent = '名前とパスワードを入力してください';
+        return;
+      }
+      errEl.textContent = '確認中…';
+
+      try {
+        const res = await fetch(GAS_URL, {
+          method: 'POST',
+          body: JSON.stringify({ name, password: pass })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showCard(data);
+        } else {
+          errEl.textContent = '名前またはパスワードが違います';
+        }
+      } catch (e) {
+        errEl.textContent = 'エラーが発生しました。もう一度試してください。';
+      }
+    }
+
+    function showCard(data) {
+      document.getElementById('displayName').textContent = data.name;
+      document.getElementById('displayRole').textContent = data.role;
+      document.getElementById('displayId').textContent = 'NO. ' + data.member_id;
+
+      const d = new Date(data.joined_date);
+      const fmt = d.getFullYear() + '.' +
+        String(d.getMonth() + 1).padStart(2, '0') + '.' +
+        String(d.getDate()).padStart(2, '0');
+      document.getElementById('displayJoined').textContent = fmt;
+
+      document.getElementById('loginWrap').style.display = 'none';
+      document.getElementById('cardWrap').style.display = 'block';
+    }
+
+    function doLogout() {
+      document.getElementById('nameInput').value = '';
+      document.getElementById('passInput').value = '';
+      document.getElementById('errorMsg').textContent = '';
+      document.getElementById('loginWrap').style.display = 'block';
+      document.getElementById('cardWrap').style.display = 'none';
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, '0');
+      const m = String(now.getMinutes()).padStart(2, '0');
+      const s = String(now.getSeconds()).padStart(2, '0');
+      document.getElementById('clockDisplay').textContent = h + ':' + m + ':' + s;
+    }
+
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    document.getElementById('passInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') doLogin();
+    });
+  </script>
+</body>
+</html>
