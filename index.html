@@ -86,6 +86,7 @@
 
     /* ── カード画面 ── */
     .card-wrap { display: none; }
+    .card-wrap.card-visible { display: block; }
 
     .card {
       width: 420px;
@@ -113,7 +114,7 @@
 
     .left-title {
       font-family: 'Hina Mincho', serif;
-      font-size: 22px;
+      font-size: 28px;
       color: #F5E8C8;
       letter-spacing: 0.15em;
       text-align: center;
@@ -121,7 +122,7 @@
 
     .left-circle {
       font-family: 'DM Mono', monospace;
-      font-size: 8px;
+      font-size: 11px;
       color: #8AAA60;
       letter-spacing: 0.28em;
       text-align: center;
@@ -129,7 +130,7 @@
 
     .left-partner {
       font-family: 'DM Mono', monospace;
-      font-size: 7px;
+      font-size: 9px;
       color: #5A7A42;
       text-align: center;
     }
@@ -154,14 +155,14 @@
 
     .right-top-label {
       font-family: 'DM Mono', monospace;
-      font-size: 8px;
+      font-size: 11px;
       color: #8C7E6E;
       letter-spacing: 0.25em;
     }
 
     .right-top-id {
       font-family: 'DM Mono', monospace;
-      font-size: 10px;
+      font-size: 13px;
       color: #A89880;
     }
 
@@ -182,7 +183,7 @@
 
     .member-role {
       font-family: 'DM Mono', monospace;
-      font-size: 9px;
+      font-size: 12px;
       color: #B07840;
       letter-spacing: 0.22em;
     }
@@ -203,20 +204,20 @@
 
     .bottom-label {
       font-family: 'DM Mono', monospace;
-      font-size: 8px;
+      font-size: 11px;
       color: #8C7E6E;
       letter-spacing: 0.18em;
     }
 
     .bottom-value {
       font-family: 'DM Mono', monospace;
-      font-size: 12px;
+      font-size: 15px;
       color: #2A1A08;
     }
 
     .clock-value {
       font-family: 'DM Mono', monospace;
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 300;
       color: #2A1A08;
       letter-spacing: 0.06em;
@@ -238,6 +239,31 @@
     }
 
     .logout-btn:hover { border-color: #A89880; color: #555; }
+
+    @media (max-width: 600px) {
+      .card-wrap.card-visible {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card {
+        width: 95vh;
+        height: calc(95vh * 260 / 420);
+        transform: rotate(90deg);
+        transform-origin: center center;
+      }
+      .card-left {
+        width: calc(95vh / 3);
+      }
+      .logout-btn {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -262,11 +288,7 @@
     <div class="card">
       <!-- 左パネル -->
       <div class="card-left">
-        <svg width="36" height="48" viewBox="0 0 36 48" fill="none">
-          <path d="M8 38 C8 32,14 30,14 24 C14 18,8 16,8 10" stroke="#A8CC80" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M18 40 C18 33,24 31,24 25 C24 19,18 17,18 10" stroke="#8AAA60" stroke-width="1.5" stroke-linecap="round"/>
-          <path d="M28 38 C28 32,34 30,34 24 C34 18,28 16,28 10" stroke="#A8CC80" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
+        <img src="flame_transparent.png" width="36" height="48" alt="ゆげ" />
         <p class="left-title">ゆ げ</p>
         <p class="left-circle">COFFEE CIRCLE</p>
         <p class="left-partner">Partner / Empire Coffee</p>
@@ -349,7 +371,7 @@
       document.getElementById('displayJoined').textContent = fmt;
 
       document.getElementById('loginWrap').style.display = 'none';
-      document.getElementById('cardWrap').style.display = 'block';
+      document.getElementById('cardWrap').classList.add('card-visible');
     }
 
     function doLogout() {
@@ -357,7 +379,7 @@
       document.getElementById('passInput').value = '';
       document.getElementById('errorMsg').textContent = '';
       document.getElementById('loginWrap').style.display = 'block';
-      document.getElementById('cardWrap').style.display = 'none';
+      document.getElementById('cardWrap').classList.remove('card-visible');
     }
 
     function updateClock() {
