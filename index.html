@@ -26,6 +26,7 @@
     }
 
     .login-title {
+      font-family: 'Hina Mincho', serif;
       font-size: 13px;
       letter-spacing: 0.2em;
       color: #888;
@@ -114,7 +115,7 @@
 
     .left-title {
       font-family: 'Hina Mincho', serif;
-      font-size: 28px;
+      font-size: 22px;
       color: #F5E8C8;
       letter-spacing: 0.15em;
       text-align: center;
@@ -122,7 +123,7 @@
 
     .left-circle {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      font-size: 9px;
       color: #8AAA60;
       letter-spacing: 0.28em;
       text-align: center;
@@ -130,7 +131,7 @@
 
     .left-partner {
       font-family: 'DM Mono', monospace;
-      font-size: 9px;
+      font-size: 7px;
       color: #5A7A42;
       text-align: center;
     }
@@ -155,14 +156,14 @@
 
     .right-top-label {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      font-size: 9px;
       color: #8C7E6E;
       letter-spacing: 0.25em;
     }
 
     .right-top-id {
       font-family: 'DM Mono', monospace;
-      font-size: 13px;
+      font-size: 10px;
       color: #A89880;
     }
 
@@ -183,7 +184,7 @@
 
     .member-role {
       font-family: 'DM Mono', monospace;
-      font-size: 12px;
+      font-size: 10px;
       color: #B07840;
       letter-spacing: 0.22em;
     }
@@ -204,20 +205,20 @@
 
     .bottom-label {
       font-family: 'DM Mono', monospace;
-      font-size: 11px;
+      font-size: 9px;
       color: #8C7E6E;
       letter-spacing: 0.18em;
     }
 
     .bottom-value {
       font-family: 'DM Mono', monospace;
-      font-size: 15px;
+      font-size: 12px;
       color: #2A1A08;
     }
 
     .clock-value {
       font-family: 'DM Mono', monospace;
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 300;
       color: #2A1A08;
       letter-spacing: 0.06em;
@@ -359,7 +360,7 @@
       const nameEl = document.getElementById('displayName');
       nameEl.textContent = data.name;
       const len = data.name.length;
-      nameEl.style.fontSize = len <= 8 ? '30px' : len <= 11 ? '24px' : '20px';
+      nameEl.style.fontSize = len <= 8 ? '24px' : len <= 11 ? '19px' : '16px';
 
       document.getElementById('displayRole').textContent = data.role;
       document.getElementById('displayId').textContent = 'NO. ' + data.member_id;
