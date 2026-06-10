@@ -87,11 +87,14 @@
 
     /* ── カード画面 ── */
     .card-wrap { display: none; }
-    .card-wrap.card-visible { display: block; }
+    .card-wrap.card-visible {
+      display: block;
+      width: min(95vw, calc(95vh * 420 / 265), 600px);
+    }
 
     .card {
-      width: 420px;
-      height: 265px;
+      width: 100%;
+      aspect-ratio: 420 / 265;
       border-radius: 14px;
       overflow: hidden;
       display: flex;
@@ -100,7 +103,7 @@
 
     /* 左パネル */
     .card-left {
-      width: 140px;
+      width: calc(100% / 3);
       flex-shrink: 0;
       background: #3A5C28;
       display: flex;
@@ -225,7 +228,7 @@
     }
 
     .logout-btn {
-      width: 420px;
+      width: 100%;
       margin-top: 0.8rem;
       padding: 9px;
       background: transparent;
@@ -253,13 +256,9 @@
         justify-content: center;
       }
       .card {
-        width: 90vw;
-        height: calc(90vw * 265 / 420);
+        width: min(90vh, calc(90vw * 420 / 265));
         transform: rotate(90deg);
         transform-origin: center center;
-      }
-      .card-left {
-        width: calc(90vw / 3);
       }
       .logout-btn {
         display: none;
